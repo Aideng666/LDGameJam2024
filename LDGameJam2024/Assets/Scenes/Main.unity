@@ -566,6 +566,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -9151698431404619384, guid: 713a22a07572b504ea5ab296b0c2474d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 550543084073553200, guid: 713a22a07572b504ea5ab296b0c2474d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -605,6 +609,18 @@ PrefabInstance:
     - target: {fileID: 550543084073553200, guid: 713a22a07572b504ea5ab296b0c2474d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447455926383401410, guid: 713a22a07572b504ea5ab296b0c2474d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447455926383401410, guid: 713a22a07572b504ea5ab296b0c2474d, type: 3}
+      propertyPath: _scenePathHash
+      value: 394288251
+      objectReference: {fileID: 0}
+    - target: {fileID: 4447455926383401410, guid: 713a22a07572b504ea5ab296b0c2474d, type: 3}
+      propertyPath: <SceneId>k__BackingField
+      value: 1693455145617020599
       objectReference: {fileID: 0}
     - target: {fileID: 4979136008476204379, guid: 713a22a07572b504ea5ab296b0c2474d, type: 3}
       propertyPath: _application

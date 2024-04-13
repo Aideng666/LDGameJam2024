@@ -1,13 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Unity.VisualScripting;
+using FishNet.Object;
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : NetworkBehaviour
 {
     [SerializeField]
     private Application _application;
+    
+    [SerializeField]
+    private GameObject _camera;
 
     [SerializeField]
     private float _moveSpeed;
@@ -34,19 +35,33 @@ public class PlayerController : MonoBehaviour
     private bool _isDashActive;
     private bool _canDash;
     private float _elaspedDashCooldownTime;
-
+    
+    [SerializeField]
+    private bool _clientAuth = true;
+    
     private void Awake()
     {
+        _application = FindObjectOfType<Application>();
         _inputManager = _application.InputManager;
         _body = GetComponent<Rigidbody>();
     }
+    
+    public override void OnStartClient()
+    {
+        if (base.IsOwner)
+            _camera.SetActive(true);
+    }
+
 
     // Update is called once per frame
     void Update()
     {
+        if (!base.IsOwner)
+            return;
+        
         _moveInput = _inputManager.Move();
         _lookInput = _inputManager.MouseLook();
-
+        
         _currentMoveVelocity = Vector3.zero;
         _applyMoveVelocity();
 
@@ -65,8 +80,23 @@ public class PlayerController : MonoBehaviour
         }
 
         _setFacingDirection();
+        
+        if (_clientAuth)
+            Move(_currentMoveVelocity);
+        else
+            ServerMove(_currentMoveVelocity);
+        
+    }
 
+    private void Move(Vector2 _currentMoveVelocity)
+    {
         _body.velocity = _currentMoveVelocity;
+
+    }
+
+    private void ServerMove(Vector2 _currentMoveVelocity)
+    {
+        Move(_currentMoveVelocity);
     }
 
     private void _applyMoveVelocity()
