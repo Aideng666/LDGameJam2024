@@ -13,7 +13,6 @@ public class InputManager
     //Then make a function to return that actions input
     private InputAction _moveInput;
     private InputAction _dashInput;
-    private InputAction _lookInput;
 
     public InputManager(InputActionAsset controls)
     {
@@ -24,7 +23,6 @@ public class InputManager
 
         _moveInput = _actionMap.FindAction("Move");
         _dashInput = _actionMap.FindAction("Dash");
-        _lookInput = _actionMap.FindAction("Look");
     }
 
     public Vector2 Move()
@@ -35,10 +33,5 @@ public class InputManager
     public bool Dash()
     {
         return _dashInput.triggered;
-    }
-
-    public Vector2 MouseLook()
-    {
-        return _lookInput.ReadValue<Vector2>();
     }
 }
