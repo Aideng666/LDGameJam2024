@@ -6,11 +6,10 @@ using UnityEngine.InputSystem;
 public class Application : MonoBehaviour
 {
     [SerializeField] InputActionAsset _gamecontrols;
-
-    private InputManager _inputManager;
+    public InputManager InputManager { get; private set; }
 
     private void Awake()
     {
-        _inputManager = new InputManager(_gamecontrols);
+        InputManager = new InputManager(_gamecontrols);
     }
 }
