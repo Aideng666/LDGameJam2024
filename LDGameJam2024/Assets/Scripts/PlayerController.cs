@@ -114,7 +114,7 @@ public class PlayerController : NetworkBehaviour
 
     private void _setFacingDirection()
     {
-        Vector3 lookToEulerAngles = new Vector3(_lookInput.y, _lookInput.x, 0);
+        Vector3 lookToEulerAngles = new Vector3(0, _lookInput.y, 0);
 
         _body.rotation *= Quaternion.Euler(lookToEulerAngles * _mouseSensitivity * Time.deltaTime);
     }
