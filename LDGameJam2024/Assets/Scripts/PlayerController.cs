@@ -62,7 +62,7 @@ public class PlayerController : NetworkBehaviour
         _moveInput = _inputManager.Move();
         _lookInput = _inputManager.MouseLook();
         
-        _currentMoveVelocity = Vector3.zero;
+        _currentMoveVelocity = _moveInput.normalized;
         _applyMoveVelocity();
 
         if (_inputManager.Dash() && _canDash && !_isDashActive)
