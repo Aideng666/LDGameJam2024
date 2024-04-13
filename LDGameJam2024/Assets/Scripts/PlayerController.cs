@@ -1,6 +1,7 @@
 using System.Threading.Tasks;
 using FishNet.Object;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerController : NetworkBehaviour
 {
@@ -56,47 +57,49 @@ public class PlayerController : NetworkBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (_inputManager == null)
+        {
+            _inputManager = _application.InputManager;
+        }
         if (!base.IsOwner)
             return;
         
         _moveInput = _inputManager.Move();
         _lookInput = _inputManager.MouseLook();
-        
-        _currentMoveVelocity = _moveInput.normalized;
-        _applyMoveVelocity();
 
-        if (_inputManager.Dash() && _canDash && !_isDashActive)
-        {
-            _activateDash();
-        }
-        if (!_canDash)
-        {
-            _runCooldownTimer();
-        }
+        _currentMoveVelocity = Vector3.zero;
 
-        if (_isDashActive)
-        {
-            _applyDashVelocity();
-        }
+        //if (_inputManager.Dash() && _canDash && !_isDashActive)
+        //{
+        //    _activateDash();
+        //}
+        //if (!_canDash)
+        //{
+        //    _runCooldownTimer();
+        //}
+//
+        //if (_isDashActive)
+        //{
+        //    _applyDashVelocity();
+        //}
 
-        _setFacingDirection();
-        
         if (_clientAuth)
-            Move(_currentMoveVelocity);
+            Move();
         else
-            ServerMove(_currentMoveVelocity);
+            ServerMove();
         
     }
 
-    private void Move(Vector2 _currentMoveVelocity)
+    private void Move()
     {
+        _applyMoveVelocity();
+        _setFacingDirection();
         _body.velocity = _currentMoveVelocity;
-
     }
 
-    private void ServerMove(Vector2 _currentMoveVelocity)
+    private void ServerMove()
     {
-        Move(_currentMoveVelocity);
+        Move();
     }
 
     private void _applyMoveVelocity()
