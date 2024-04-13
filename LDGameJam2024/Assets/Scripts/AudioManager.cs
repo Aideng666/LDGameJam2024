@@ -30,6 +30,8 @@ public class AudioManager : MonoBehaviour
             sound.source.pitch = sound.pitch;
             sound.source.loop = sound.loop;
         }
+
+        Play("MainMenu");
     }
 
     public void Play(string name)
