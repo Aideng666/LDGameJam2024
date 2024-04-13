@@ -12,6 +12,9 @@ public class PlayerController : NetworkBehaviour
     private GameObject _camera;
 
     [SerializeField]
+    private GameObject _cam;
+
+    [SerializeField]
     private float _moveSpeed;
 
     [SerializeField]
@@ -32,7 +35,6 @@ public class PlayerController : NetworkBehaviour
     private Vector3 _currentMoveVelocity;
     private Vector3 _dashDirection;
     private Vector2 _moveInput;
-    private Vector2 _lookInput;
     private bool _isDashActive;
     private bool _canDash;
     private float _elaspedDashCooldownTime;
@@ -65,7 +67,6 @@ public class PlayerController : NetworkBehaviour
             return;
         
         _moveInput = _inputManager.Move();
-        _lookInput = _inputManager.MouseLook();
 
         _currentMoveVelocity = Vector3.zero;
 
@@ -90,10 +91,8 @@ public class PlayerController : NetworkBehaviour
         
     }
 
-    private void Move()
-    {
-        _applyMoveVelocity();
-        _setFacingDirection();
+        _rotatePlayer();
+
         _body.velocity = _currentMoveVelocity;
     }
 
@@ -104,19 +103,17 @@ public class PlayerController : NetworkBehaviour
 
     private void _applyMoveVelocity()
     {
-        _currentMoveVelocity += new Vector3(_moveInput.x, 0, _moveInput.y) * _moveSpeed;
+        _currentMoveVelocity += transform.rotation * (new Vector3(_moveInput.x, 0, _moveInput.y) * _moveSpeed);
     }
 
     private void _applyDashVelocity()
     {
-        _currentMoveVelocity += _dashDirection * _dashSpeed;
+        _currentMoveVelocity += transform.rotation * (_dashDirection * _dashSpeed);
     }
-
-    private void _setFacingDirection()
+   
+    private void _rotatePlayer()
     {
-        Vector3 lookToEulerAngles = new Vector3(0, _lookInput.y, 0);
-
-        _body.rotation *= Quaternion.Euler(lookToEulerAngles * _mouseSensitivity * Time.deltaTime);
+        transform.forward = _cam.transform.forward;
     }
 
     private void _activateDash()
